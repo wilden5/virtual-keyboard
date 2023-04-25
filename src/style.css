@@ -1,0 +1,86 @@
+html {
+    font-size: 10px;
+}
+
+.keyboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keyboard-title {
+    font-size: 4rem;
+    color: darkolivegreen;
+}
+
+.keyboard-textarea {
+    width: 77rem;
+    height: 15rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    resize: none;
+    background-color: #f8f8f8;
+}
+
+.keyboard-keys-container {
+    width: 75rem;
+    padding: 1rem 0.6rem 1rem 1rem;
+    margin: .5rem;
+    background-color: cadetblue;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: darkolivegreen;
+    border-width: 0.5rem;
+}
+
+.keyboard-button {
+    height: 4.5rem;
+    width: 5.5%;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: darkolivegreen;
+    color: white;
+    font-size: 2rem;
+    padding: 0;
+}
+
+.keyboard-mx-button {
+    width: 17%;
+}
+
+.keyboard-sx-button {
+    width: 8%;
+}
+
+.keyboard-m-button {
+    width: 10.5%;
+}
+.keyboard-space-button {
+    width: 54.5%;
+}
+
+.keyboard-shift-button {
+    width: 18%;
+}
+
+.keyboard-shift2-button {
+    width: 23%;
+}
+
+.keyboard-enter-button {
+    width: 17%;
+}
+
+.keyboard-button:hover {
+    cursor: pointer;
+    background-color: darkgoldenrod;
+    transition: ease-in-out .6s;
+}
+
+.keyboard-description,
+.keyboard-hint {
+    font-size: 3rem;
+    text-align: center;
+    margin: 0;
+}
