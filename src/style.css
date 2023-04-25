@@ -45,31 +45,25 @@ html {
     padding: 0;
 }
 
-.keyboard-mx-button {
-    width: 17%;
-}
-
 .keyboard-sx-button {
     width: 8%;
 }
 
-.keyboard-m-button {
-    width: 10.5%;
+.button-enter,
+.button-backspace {
+    width: 17%;
 }
-.keyboard-space-button {
+
+.button-space {
     width: 54.5%;
 }
 
-.keyboard-shift-button {
+.button-capslock {
     width: 18%;
 }
 
-.keyboard-shift2-button {
+.button-shift {
     width: 23%;
-}
-
-.keyboard-enter-button {
-    width: 17%;
 }
 
 .keyboard-button:hover {
@@ -78,9 +72,9 @@ html {
     transition: ease-in-out .6s;
 }
 
-.keyboard-description,
-.keyboard-hint {
-    font-size: 3rem;
+.keyboard-description {
+    width: 46%;
+    font-size: 2rem;
     text-align: center;
     margin: 0;
 }
