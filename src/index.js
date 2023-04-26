@@ -72,11 +72,32 @@ const generateKeyboardKeys = () => {
 };
 
 const toggleCapsLock = () => {
-  keyboardGeneratedKeys.forEach((key) => {
-    if (!sysButtons.includes(key.textContent)) {
-      key.classList.toggle('uppercase');
-    }
-  })
+  const buttonCapsLock = document.querySelector('.button-capslock');
+  buttonCapsLock.addEventListener('click', () => {
+    keyboardGeneratedKeys.forEach((key) => {
+      if (!sysButtons.includes(key.textContent)) {
+        key.classList.toggle('uppercase');
+      }
+    });
+  });
+}
+
+const capitalizeKeysOnShift = () => {
+  const shiftButton = document.querySelector('.button-shift');
+  shiftButton.addEventListener('mousedown', () => {
+    keyboardGeneratedKeys.forEach((key) => {
+      if (!sysButtons.includes(key.textContent)) {
+        key.classList.add('uppercase');
+      }
+    })
+  });
+  shiftButton.addEventListener('mouseup', () => {
+    keyboardGeneratedKeys.forEach((key) => {
+      if (!sysButtons.includes(key.textContent)) {
+        key.classList.remove('uppercase');
+      }
+    })
+  });
 }
 
 (function initPage() {
@@ -147,9 +168,11 @@ keyboardGeneratedKeys.forEach((key) => {
       });
     break;
     case 'CapsLock':
-      key.addEventListener('click', () => {
-          toggleCapsLock();
-      });
-      break;
+      toggleCapsLock();
+    break;
+    case 'Shift':
+    case 'ShR':
+      capitalizeKeysOnShift();
+    break;
   }
 })
