@@ -1,4 +1,4 @@
-const englishButtons = [
+const englishLayout = [
   '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
   'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del',
   'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 'Enter',
@@ -40,7 +40,7 @@ const generatePageLayout = () => {
 const generateKeyboardKeys = () => {
   const keyboardKeysContainer = document.querySelector('.keyboard-keys-container');
 
-  englishButtons.forEach((key) => {
+  englishLayout.forEach((key) => {
     const newButton = document.createElement('button');
     newButton.classList.add('keyboard-button');
     newButton.textContent = key;
@@ -75,3 +75,50 @@ const generateKeyboardKeys = () => {
   generatePageLayout();
   generateKeyboardKeys();
 }());
+
+const textArea = document.querySelector('.keyboard-textarea');
+const buttons = document.querySelectorAll('.keyboard-button');
+const sysButtons = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', 'Enter', 'Del', 'ShR'];
+buttons.forEach((button) => {
+  if (!sysButtons.includes(button.textContent)) {
+    button.addEventListener('click', () => {
+      textArea.value += button.textContent;
+      textArea.focus();
+    });
+  }
+
+  switch (button.textContent) {
+    case 'Backspace':
+      button.addEventListener('click', () => {
+        const { selectionStart } = textArea;
+        const { selectionEnd } = textArea;
+        const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
+        const textAfterCursor = textArea.value.substring(selectionEnd);
+        textArea.value = textBeforeCursor + textAfterCursor;
+        textArea.selectionStart = selectionStart - 1;
+        textArea.selectionEnd = selectionStart - 1;
+        textArea.focus();
+      });
+      break;
+    case 'Del':
+      button.addEventListener('click', () => {
+        const { selectionStart } = textArea;
+        const textBeforeCursor = textArea.value.substring(0, selectionStart);
+        const textAfterCursor = textArea.value.substring(selectionStart + 1);
+        textArea.value = textBeforeCursor + textAfterCursor;
+        textArea.selectionStart = selectionStart;
+        textArea.selectionEnd = selectionStart;
+        textArea.focus();
+      });
+      break;
+    case 'Space':
+      button.addEventListener('click', () => {
+        const { selectionStart } = textArea;
+        textArea.value = `${textArea.value.slice(0, selectionStart)} ${textArea.value.slice(selectionStart)}`;
+        textArea.selectionStart = selectionStart + 1;
+        textArea.selectionEnd = selectionStart + 1;
+        textArea.focus();
+      });
+      break;
+  }
+});
