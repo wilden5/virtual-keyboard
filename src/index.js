@@ -1,4 +1,4 @@
-const englishLayout = [
+const englishKeyboardLayout = [
   '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
   'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del',
   'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 'Enter',
@@ -40,7 +40,7 @@ const generatePageLayout = () => {
 const generateKeyboardKeys = () => {
   const keyboardKeysContainer = document.querySelector('.keyboard-keys-container');
 
-  englishLayout.forEach((key) => {
+  englishKeyboardLayout.forEach((key) => {
     const newButton = document.createElement('button');
     newButton.classList.add('keyboard-button');
     newButton.textContent = key;
@@ -71,25 +71,33 @@ const generateKeyboardKeys = () => {
   });
 };
 
+const toggleCapsLock = () => {
+  keyboardGeneratedKeys.forEach((key) => {
+    if (!sysButtons.includes(key.textContent)) {
+      key.classList.toggle('uppercase');
+    }
+  })
+}
+
 (function initPage() {
   generatePageLayout();
   generateKeyboardKeys();
 }());
 
 const textArea = document.querySelector('.keyboard-textarea');
-const buttons = document.querySelectorAll('.keyboard-button');
+const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
 const sysButtons = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'];
-buttons.forEach((button) => {
-  if (!sysButtons.includes(button.textContent)) {
-    button.addEventListener('click', () => {
-      textArea.value += button.textContent;
+keyboardGeneratedKeys.forEach((key) => {
+  if (!sysButtons.includes(key.textContent)) {
+    key.addEventListener('click', () => {
+      textArea.value += key.textContent;
       textArea.focus();
     })
   }
 
-  switch (button.textContent) {
+  switch (key.textContent) {
     case 'Backspace':
-      button.addEventListener('click', () => {
+      key.addEventListener('click', () => {
         const selectionStart = textArea.selectionStart;
         const selectionEnd = textArea.selectionEnd;
         const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
@@ -101,7 +109,7 @@ buttons.forEach((button) => {
       });
     break;
     case 'Del':
-      button.addEventListener('click', () => {
+      key.addEventListener('click', () => {
         const selectionStart = textArea.selectionStart;
         const textBeforeCursor = textArea.value.substring(0, selectionStart);
         const textAfterCursor = textArea.value.substring(selectionStart + 1);
@@ -112,7 +120,7 @@ buttons.forEach((button) => {
       });
     break;
     case 'Space':
-      button.addEventListener('click', () => {
+      key.addEventListener('click', () => {
         const selectionStart = textArea.selectionStart;
         textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
         textArea.selectionStart = selectionStart + 1;
@@ -120,5 +128,28 @@ buttons.forEach((button) => {
         textArea.focus();
       });
     break;
+    case 'Enter':
+      key.addEventListener('click', () => {
+        const selectionStart = textArea.selectionStart;
+        textArea.value = textArea.value.slice(0, selectionStart) + '\n' + textArea.value.slice(selectionStart);
+        textArea.selectionStart = selectionStart + 1;
+        textArea.selectionEnd = selectionStart + 1;
+        textArea.focus();
+      });
+    break;
+    case 'Tab':
+      key.addEventListener('click', () => {
+          const selectionStart = textArea.selectionStart;
+          textArea.value = textArea.value.substring(0, selectionStart) + '    ' + textArea.value.substring(selectionStart);
+          textArea.selectionStart = selectionStart + 4;
+          textArea.selectionEnd = selectionStart + 4;
+          textArea.focus();
+      });
+    break;
+    case 'CapsLock':
+      key.addEventListener('click', () => {
+          toggleCapsLock();
+      });
+      break;
   }
 })
