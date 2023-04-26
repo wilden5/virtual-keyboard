@@ -78,20 +78,20 @@ const generateKeyboardKeys = () => {
 
 const textArea = document.querySelector('.keyboard-textarea');
 const buttons = document.querySelectorAll('.keyboard-button');
-const sysButtons = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space', 'Enter', 'Del', 'ShR'];
+const sysButtons = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'];
 buttons.forEach((button) => {
   if (!sysButtons.includes(button.textContent)) {
     button.addEventListener('click', () => {
       textArea.value += button.textContent;
       textArea.focus();
-    });
+    })
   }
 
   switch (button.textContent) {
     case 'Backspace':
       button.addEventListener('click', () => {
-        const { selectionStart } = textArea;
-        const { selectionEnd } = textArea;
+        const selectionStart = textArea.selectionStart;
+        const selectionEnd = textArea.selectionEnd;
         const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
         const textAfterCursor = textArea.value.substring(selectionEnd);
         textArea.value = textBeforeCursor + textAfterCursor;
@@ -99,10 +99,10 @@ buttons.forEach((button) => {
         textArea.selectionEnd = selectionStart - 1;
         textArea.focus();
       });
-      break;
+    break;
     case 'Del':
       button.addEventListener('click', () => {
-        const { selectionStart } = textArea;
+        const selectionStart = textArea.selectionStart;
         const textBeforeCursor = textArea.value.substring(0, selectionStart);
         const textAfterCursor = textArea.value.substring(selectionStart + 1);
         textArea.value = textBeforeCursor + textAfterCursor;
@@ -110,15 +110,15 @@ buttons.forEach((button) => {
         textArea.selectionEnd = selectionStart;
         textArea.focus();
       });
-      break;
+    break;
     case 'Space':
       button.addEventListener('click', () => {
-        const { selectionStart } = textArea;
-        textArea.value = `${textArea.value.slice(0, selectionStart)} ${textArea.value.slice(selectionStart)}`;
+        const selectionStart = textArea.selectionStart;
+        textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
         textArea.selectionStart = selectionStart + 1;
         textArea.selectionEnd = selectionStart + 1;
         textArea.focus();
       });
-      break;
+    break;
   }
-});
+})
