@@ -45,7 +45,8 @@ html {
     padding: 0;
 }
 
-.keyboard-sx-button {
+.button-tab,
+.button-del {
     width: 8%;
 }
 
@@ -64,6 +65,10 @@ html {
 
 .button-shift {
     width: 23%;
+}
+
+.button-shift-default-width {
+    width: 5.5%;
 }
 
 .keyboard-button:hover {

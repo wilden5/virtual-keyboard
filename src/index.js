@@ -51,8 +51,10 @@ const generateKeyboardKeys = () => {
         newButton.classList.add('button-backspace');
         break;
       case 'Tab':
+        newButton.classList.add('button-tab');
+        break;
       case 'Del':
-        newButton.classList.add('keyboard-sx-button');
+        newButton.classList.add('button-del');
         break;
       case 'Space':
         newButton.classList.add('button-space');
@@ -63,6 +65,9 @@ const generateKeyboardKeys = () => {
       case 'Enter':
         newButton.classList.add('button-enter');
         break;
+      case 'ShR':
+        newButton.classList.add('button-shift', 'button-shift-default-width');
+        break;
       case 'Shift':
         newButton.classList.add('button-shift');
         break;
@@ -71,45 +76,105 @@ const generateKeyboardKeys = () => {
   });
 };
 
-const toggleCapsLock = () => {
+const handleCapsLockClick = () => {
   const buttonCapsLock = document.querySelector('.button-capslock');
   buttonCapsLock.addEventListener('click', () => {
     keyboardGeneratedKeys.forEach((key) => {
-      if (!sysButtons.includes(key.textContent)) {
+      if (!systemKeys.includes(key.textContent)) {
         key.classList.toggle('uppercase');
       }
     });
   });
-}
+};
 
-const capitalizeKeysOnShift = () => {
-  const shiftButton = document.querySelector('.button-shift');
-  shiftButton.addEventListener('mousedown', () => {
-    keyboardGeneratedKeys.forEach((key) => {
-      if (!sysButtons.includes(key.textContent)) {
-        key.classList.add('uppercase');
-      }
-    })
+const handleHoldOnShift = () => {
+  document.querySelectorAll('.button-shift').forEach((shiftButton) => {
+    shiftButton.addEventListener('mousedown', () => {
+      keyboardGeneratedKeys.forEach((key) => {
+        if (!systemKeys.includes(key.textContent)) {
+          key.classList.add('uppercase');
+        }
+      })
+    });
+    shiftButton.addEventListener('mouseup', () => {
+      keyboardGeneratedKeys.forEach((key) => {
+        if (!systemKeys.includes(key.textContent)) {
+          key.classList.remove('uppercase');
+        }
+      })
+    });
+  })
+}; // capitalizing keyboard keys while holding on shift
+
+const handleBackspaceClick = () => {
+    document.querySelector('.button-backspace').addEventListener('click', () => {
+    const selectionStart = textArea.selectionStart;
+    const selectionEnd = textArea.selectionEnd;
+    const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
+    const textAfterCursor = textArea.value.substring(selectionEnd);
+    textArea.value = textBeforeCursor + textAfterCursor;
+    textArea.selectionStart = selectionStart - 1;
+    textArea.selectionEnd = selectionStart - 1;
+    textArea.focus();
   });
-  shiftButton.addEventListener('mouseup', () => {
-    keyboardGeneratedKeys.forEach((key) => {
-      if (!sysButtons.includes(key.textContent)) {
-        key.classList.remove('uppercase');
-      }
-    })
+};
+
+const handleDelClick = () => {
+    document.querySelector('.button-del').addEventListener('click', () => {
+    const selectionStart = textArea.selectionStart;
+    const textBeforeCursor = textArea.value.substring(0, selectionStart);
+    const textAfterCursor = textArea.value.substring(selectionStart + 1);
+    textArea.value = textBeforeCursor + textAfterCursor;
+    textArea.selectionStart = selectionStart;
+    textArea.selectionEnd = selectionStart;
+    textArea.focus();
   });
-}
+};
+
+const handleSpaceClick = () => {
+    document.querySelector('.button-space').addEventListener('click', () => {
+    const selectionStart = textArea.selectionStart;
+    textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
+    textArea.selectionStart = selectionStart + 1;
+    textArea.selectionEnd = selectionStart + 1;
+    textArea.focus();
+  });
+};
+
+const handleEnterClick = () => {
+    document.querySelector('.button-enter').addEventListener('click', () => {
+    const selectionStart = textArea.selectionStart;
+    textArea.value = textArea.value.slice(0, selectionStart) + '\n' + textArea.value.slice(selectionStart);
+    textArea.selectionStart = selectionStart + 1;
+    textArea.selectionEnd = selectionStart + 1;
+    textArea.focus();
+  });
+};
+
+const handleTabClick = () => {
+    document.querySelector('.button-tab').addEventListener('click', () => {
+    const selectionStart = textArea.selectionStart;
+    textArea.value = textArea.value.substring(0, selectionStart) + '    ' + textArea.value.substring(selectionStart);
+    textArea.selectionStart = selectionStart + 4;
+    textArea.selectionEnd = selectionStart + 4;
+    textArea.focus();
+  });
+};
 
 (function initPage() {
   generatePageLayout();
   generateKeyboardKeys();
 }());
 
+const handleClicksOnKeyboardKeys = () => {
+
+}
+
 const textArea = document.querySelector('.keyboard-textarea');
 const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
-const sysButtons = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'];
+const systemKeys = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'];
 keyboardGeneratedKeys.forEach((key) => {
-  if (!sysButtons.includes(key.textContent)) {
+  if (!systemKeys.includes(key.textContent)) {
     key.addEventListener('click', () => {
       textArea.value += key.textContent;
       textArea.focus();
@@ -118,61 +183,26 @@ keyboardGeneratedKeys.forEach((key) => {
 
   switch (key.textContent) {
     case 'Backspace':
-      key.addEventListener('click', () => {
-        const selectionStart = textArea.selectionStart;
-        const selectionEnd = textArea.selectionEnd;
-        const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
-        const textAfterCursor = textArea.value.substring(selectionEnd);
-        textArea.value = textBeforeCursor + textAfterCursor;
-        textArea.selectionStart = selectionStart - 1;
-        textArea.selectionEnd = selectionStart - 1;
-        textArea.focus();
-      });
-    break;
+      handleBackspaceClick();
+      break;
     case 'Del':
-      key.addEventListener('click', () => {
-        const selectionStart = textArea.selectionStart;
-        const textBeforeCursor = textArea.value.substring(0, selectionStart);
-        const textAfterCursor = textArea.value.substring(selectionStart + 1);
-        textArea.value = textBeforeCursor + textAfterCursor;
-        textArea.selectionStart = selectionStart;
-        textArea.selectionEnd = selectionStart;
-        textArea.focus();
-      });
-    break;
+      handleDelClick();
+      break;
     case 'Space':
-      key.addEventListener('click', () => {
-        const selectionStart = textArea.selectionStart;
-        textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
-        textArea.selectionStart = selectionStart + 1;
-        textArea.selectionEnd = selectionStart + 1;
-        textArea.focus();
-      });
-    break;
+      handleSpaceClick();
+      break;
     case 'Enter':
-      key.addEventListener('click', () => {
-        const selectionStart = textArea.selectionStart;
-        textArea.value = textArea.value.slice(0, selectionStart) + '\n' + textArea.value.slice(selectionStart);
-        textArea.selectionStart = selectionStart + 1;
-        textArea.selectionEnd = selectionStart + 1;
-        textArea.focus();
-      });
-    break;
+      handleEnterClick();
+      break;
     case 'Tab':
-      key.addEventListener('click', () => {
-          const selectionStart = textArea.selectionStart;
-          textArea.value = textArea.value.substring(0, selectionStart) + '    ' + textArea.value.substring(selectionStart);
-          textArea.selectionStart = selectionStart + 4;
-          textArea.selectionEnd = selectionStart + 4;
-          textArea.focus();
-      });
-    break;
+      handleTabClick();
+      break;
     case 'CapsLock':
-      toggleCapsLock();
-    break;
+      handleCapsLockClick();
+      break;
     case 'Shift':
     case 'ShR':
-      capitalizeKeysOnShift();
-    break;
+      handleHoldOnShift();
+      break;
   }
 })
