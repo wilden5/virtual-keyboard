@@ -23,6 +23,7 @@ const generatePageLayout = () => {
 
   const keyboardTextArea = document.createElement('textarea');
   keyboardTextArea.classList.add('keyboard-textarea');
+  keyboardTextArea.setAttribute('autofocus', '');
 
   const keyboardKeysContainer = document.createElement('div');
   keyboardKeysContainer.classList.add('keyboard-keys-container');
@@ -270,6 +271,21 @@ const handleTabKey = () => {
     })
 };
 
+// todo: обработай клавиши, для которых event.key не совпадает
+const handleOtherKeys = () => {
+
+    document.addEventListener("keydown", (event) => {
+        englishKeyboardLayout.forEach((key) => {
+            if (event.key === key) {
+                document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
+            }
+        })
+        /*if (event.key === "a") {
+            document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
+        }*/
+    })
+}
+
 const handleClicksOnKeyboardKeys = () => {
     keyboardGeneratedKeys.forEach((key) => {
         if (!systemKeys.includes(key.textContent)) {
@@ -302,6 +318,8 @@ const handleClicksOnKeyboardKeys = () => {
             case 'ShR':
                 handleHoldOnShift();
                 break;
+            default:
+                handleOtherKeys();
         }
     })
 }
