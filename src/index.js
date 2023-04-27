@@ -5,6 +5,9 @@ const englishKeyboardLayout = [
   'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'ShR',
   'Ctrl', 'Win', 'Alt', 'Space', 'Alt', '◄', '▼', '►',
 ];
+const systemKeys = [
+    'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'
+];
 
 // todo: подумай насчет деструктуризации и классов
 
@@ -161,48 +164,49 @@ const handleTabClick = () => {
   });
 };
 
+const handleClicksOnKeyboardKeys = (textArea, keyboardGeneratedKeys) => {
+    keyboardGeneratedKeys.forEach((key) => {
+        if (!systemKeys.includes(key.textContent)) {
+            key.addEventListener('click', () => {
+                textArea.value += key.textContent;
+                textArea.focus();
+            })
+        }
+
+        switch (key.textContent) {
+            case 'Backspace':
+                handleBackspaceClick();
+                break;
+            case 'Del':
+                handleDelClick();
+                break;
+            case 'Space':
+                handleSpaceClick();
+                break;
+            case 'Enter':
+                handleEnterClick();
+                break;
+            case 'Tab':
+                handleTabClick();
+                break;
+            case 'CapsLock':
+                handleCapsLockClick();
+                break;
+            case 'Shift':
+            case 'ShR':
+                handleHoldOnShift();
+                break;
+        }
+    })
+}
+
 (function initPage() {
   generatePageLayout();
   generateKeyboardKeys();
 }());
 
-const handleClicksOnKeyboardKeys = () => {
-
-}
-
+// todo: подумай как переместить 209 210 212
 const textArea = document.querySelector('.keyboard-textarea');
 const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
-const systemKeys = ['Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'];
-keyboardGeneratedKeys.forEach((key) => {
-  if (!systemKeys.includes(key.textContent)) {
-    key.addEventListener('click', () => {
-      textArea.value += key.textContent;
-      textArea.focus();
-    })
-  }
 
-  switch (key.textContent) {
-    case 'Backspace':
-      handleBackspaceClick();
-      break;
-    case 'Del':
-      handleDelClick();
-      break;
-    case 'Space':
-      handleSpaceClick();
-      break;
-    case 'Enter':
-      handleEnterClick();
-      break;
-    case 'Tab':
-      handleTabClick();
-      break;
-    case 'CapsLock':
-      handleCapsLockClick();
-      break;
-    case 'Shift':
-    case 'ShR':
-      handleHoldOnShift();
-      break;
-  }
-})
+handleClicksOnKeyboardKeys(textArea, keyboardGeneratedKeys);
