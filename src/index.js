@@ -79,69 +79,116 @@ const generateKeyboardKeys = () => {
   });
 };
 
-const handleCapsLockClick = () => {
-  const buttonCapsLock = document.querySelector('.button-capslock');
-  buttonCapsLock.addEventListener('click', () => {
-    keyboardGeneratedKeys.forEach((key) => {
-      if (!systemKeys.includes(key.textContent)) {
-        key.classList.toggle('uppercase');
-      }
-    });
-  });
+const handleCapsLockKey = () => {
+  const toUpperCase = () => {
+      keyboardGeneratedKeys.forEach((key) => {
+          if (!systemKeys.includes(key.textContent)) {
+              key.classList.toggle('uppercase');
+          }
+      });
+  }
+    document.querySelector('.button-capslock').addEventListener('click', toUpperCase);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "CapsLock") {
+            toUpperCase();
+        }
+    })
 };
 
 const handleHoldOnShift = () => {
-  document.querySelectorAll('.button-shift').forEach((shiftButton) => {
-    shiftButton.addEventListener('mousedown', () => {
-      keyboardGeneratedKeys.forEach((key) => {
-        if (!systemKeys.includes(key.textContent)) {
-          key.classList.add('uppercase');
+    const holdToUpperCase = (type) => {
+        if (type === "add") {
+            keyboardGeneratedKeys.forEach((key) => {
+                if (!systemKeys.includes(key.textContent)) {
+                    key.classList.add('uppercase');
+                }
+            })
+        } else {
+            keyboardGeneratedKeys.forEach((key) => {
+                if (!systemKeys.includes(key.textContent)) {
+                    key.classList.remove('uppercase');
+                }
+            })
         }
-      })
-    });
-    shiftButton.addEventListener('mouseup', () => {
-      keyboardGeneratedKeys.forEach((key) => {
-        if (!systemKeys.includes(key.textContent)) {
-          key.classList.remove('uppercase');
+    }
+    document.querySelectorAll('.button-shift').forEach((shiftButton) => {
+        shiftButton.addEventListener('mousedown', () => {
+            holdToUpperCase("add");
+        });
+        shiftButton.addEventListener('mouseup', () => {
+            holdToUpperCase("remove");
+        });
+    })
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+            holdToUpperCase("add");
         }
-      })
     });
-  })
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+            holdToUpperCase("remove");
+        }
+    });
 }; // capitalizing keyboard keys while holding on shift
 
-const handleBackspaceClick = () => {
-    document.querySelector('.button-backspace').addEventListener('click', () => {
-    const selectionStart = textArea.selectionStart;
-    const selectionEnd = textArea.selectionEnd;
-    const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
-    const textAfterCursor = textArea.value.substring(selectionEnd);
-    textArea.value = textBeforeCursor + textAfterCursor;
-    textArea.selectionStart = selectionStart - 1;
-    textArea.selectionEnd = selectionStart - 1;
-    textArea.focus();
-  });
+const handleBackspaceKey = () => {
+    const deleteLastLetter = () => {
+        const selectionStart = textArea.selectionStart;
+        const selectionEnd = textArea.selectionEnd;
+        const textBeforeCursor = textArea.value.substring(0, selectionStart - 1);
+        const textAfterCursor = textArea.value.substring(selectionEnd);
+        textArea.value = textBeforeCursor + textAfterCursor;
+        textArea.selectionStart = selectionStart - 1;
+        textArea.selectionEnd = selectionStart - 1;
+        textArea.focus();
+    }
+    document.querySelector('.button-backspace').addEventListener('click', deleteLastLetter);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Backspace") {
+            event.preventDefault();
+            deleteLastLetter();
+        }
+    })
 };
 
-const handleDelClick = () => {
-    document.querySelector('.button-del').addEventListener('click', () => {
-    const selectionStart = textArea.selectionStart;
-    const textBeforeCursor = textArea.value.substring(0, selectionStart);
-    const textAfterCursor = textArea.value.substring(selectionStart + 1);
-    textArea.value = textBeforeCursor + textAfterCursor;
-    textArea.selectionStart = selectionStart;
-    textArea.selectionEnd = selectionStart;
-    textArea.focus();
-  });
+const handleDelKey = () => {
+    const deleteNextLetter = () => {
+        const selectionStart = textArea.selectionStart;
+        const textBeforeCursor = textArea.value.substring(0, selectionStart);
+        const textAfterCursor = textArea.value.substring(selectionStart + 1);
+        textArea.value = textBeforeCursor + textAfterCursor;
+        textArea.selectionStart = selectionStart;
+        textArea.selectionEnd = selectionStart;
+        textArea.focus();
+    }
+    document.querySelector('.button-del').addEventListener('click', deleteNextLetter);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Delete") {
+            event.preventDefault();
+            deleteNextLetter();
+        }
+    })
 };
 
-const handleSpaceClick = () => {
-    document.querySelector('.button-space').addEventListener('click', () => {
-    const selectionStart = textArea.selectionStart;
-    textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
-    textArea.selectionStart = selectionStart + 1;
-    textArea.selectionEnd = selectionStart + 1;
-    textArea.focus();
-  });
+const handleSpaceKey = () => {
+    const insertSpace = () => {
+        const selectionStart = textArea.selectionStart;
+        textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
+        textArea.selectionStart = selectionStart + 1;
+        textArea.selectionEnd = selectionStart + 1;
+        textArea.focus();
+    }
+    document.querySelector('.button-space').addEventListener('click', insertSpace);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Space") {
+            event.preventDefault();
+            insertSpace();
+        }
+    })
 };
 
 const handleEnterKey = () => {
@@ -156,7 +203,7 @@ const handleEnterKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Enter") {
-           insertNewLine();
+            insertNewLine();
         }
     })
 };
@@ -190,13 +237,13 @@ const handleClicksOnKeyboardKeys = () => {
 
         switch (key.textContent) {
             case 'Backspace':
-                handleBackspaceClick();
+                handleBackspaceKey();
                 break;
             case 'Del':
-                handleDelClick();
+                handleDelKey();
                 break;
             case 'Space':
-                handleSpaceClick();
+                handleSpaceKey();
                 break;
             case 'Enter':
                 handleEnterKey();
@@ -205,7 +252,7 @@ const handleClicksOnKeyboardKeys = () => {
                 handleTabKey();
                 break;
             case 'CapsLock':
-                handleCapsLockClick();
+                handleCapsLockKey();
                 break;
             case 'Shift':
             case 'ShR':
@@ -225,8 +272,3 @@ const textArea = document.querySelector('.keyboard-textarea');
 const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
 
 handleClicksOnKeyboardKeys();
-
-const handlePressesOnKeyboardKeys = () => {
-
-}
-
