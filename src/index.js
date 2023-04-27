@@ -144,27 +144,42 @@ const handleSpaceClick = () => {
   });
 };
 
-const handleEnterClick = () => {
-    document.querySelector('.button-enter').addEventListener('click', () => {
-    const selectionStart = textArea.selectionStart;
-    textArea.value = textArea.value.slice(0, selectionStart) + '\n' + textArea.value.slice(selectionStart);
-    textArea.selectionStart = selectionStart + 1;
-    textArea.selectionEnd = selectionStart + 1;
-    textArea.focus();
-  });
+const handleEnterKey = () => {
+    const insertNewLine = () => {
+        const selectionStart = textArea.selectionStart;
+        textArea.value = textArea.value.slice(0, selectionStart) + '\n' + textArea.value.slice(selectionStart);
+        textArea.selectionStart = selectionStart + 1;
+        textArea.selectionEnd = selectionStart + 1;
+        textArea.focus();
+    }
+    document.querySelector('.button-enter').addEventListener('click', insertNewLine);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Enter") {
+           insertNewLine();
+        }
+    })
 };
 
-const handleTabClick = () => {
-    document.querySelector('.button-tab').addEventListener('click', () => {
-    const selectionStart = textArea.selectionStart;
-    textArea.value = textArea.value.substring(0, selectionStart) + '    ' + textArea.value.substring(selectionStart);
-    textArea.selectionStart = selectionStart + 4;
-    textArea.selectionEnd = selectionStart + 4;
-    textArea.focus();
-  });
+const handleTabKey = () => {
+    const insertFourSpaces = () => {
+        const selectionStart = textArea.selectionStart;
+        textArea.value = textArea.value.substring(0, selectionStart) + '    ' + textArea.value.substring(selectionStart);
+        textArea.selectionStart = selectionStart + 4;
+        textArea.selectionEnd = selectionStart + 4;
+        textArea.focus();
+    }
+    document.querySelector('.button-tab').addEventListener('click', insertFourSpaces);
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Tab") {
+            event.preventDefault();
+            insertFourSpaces();
+        }
+    })
 };
 
-const handleClicksOnKeyboardKeys = (textArea, keyboardGeneratedKeys) => {
+const handleClicksOnKeyboardKeys = () => {
     keyboardGeneratedKeys.forEach((key) => {
         if (!systemKeys.includes(key.textContent)) {
             key.addEventListener('click', () => {
@@ -184,10 +199,10 @@ const handleClicksOnKeyboardKeys = (textArea, keyboardGeneratedKeys) => {
                 handleSpaceClick();
                 break;
             case 'Enter':
-                handleEnterClick();
+                handleEnterKey();
                 break;
             case 'Tab':
-                handleTabClick();
+                handleTabKey();
                 break;
             case 'CapsLock':
                 handleCapsLockClick();
@@ -209,4 +224,9 @@ const handleClicksOnKeyboardKeys = (textArea, keyboardGeneratedKeys) => {
 const textArea = document.querySelector('.keyboard-textarea');
 const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
 
-handleClicksOnKeyboardKeys(textArea, keyboardGeneratedKeys);
+handleClicksOnKeyboardKeys();
+
+const handlePressesOnKeyboardKeys = () => {
+
+}
+
