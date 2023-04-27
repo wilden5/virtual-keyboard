@@ -73,8 +73,13 @@ html {
 
 .keyboard-button:hover {
     cursor: pointer;
-    background-color: darkgoldenrod;
-    transition: ease-in-out .6s;
+    background-color: #B8860B;
+}
+
+.keyboard-button:active {
+    background-color: #FFB90F;
+    border-radius: 2rem;
+    transition: ease-in-out .2s;
 }
 
 .key-pressed {
