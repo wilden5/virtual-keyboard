@@ -50,31 +50,74 @@ const generateKeyboardKeys = () => {
     keyboardKeysContainer.appendChild(newButton);
 
     switch (key) {
-      case 'Backspace':
-        newButton.classList.add('button-backspace');
-        break;
-      case 'Tab':
-        newButton.classList.add('button-tab');
-        break;
-      case 'Del':
-        newButton.classList.add('button-del');
-        break;
-      case 'Space':
-        newButton.classList.add('button-space');
-        break;
-      case 'CapsLock':
-        newButton.classList.add('button-capslock');
-        break;
-      case 'Enter':
-        newButton.classList.add('button-enter');
-        break;
-      case 'ShR':
-        newButton.classList.add('button-shift', 'button-shift-default-width');
-        break;
-      case 'Shift':
-        newButton.classList.add('button-shift');
-        break;
-      default:
+        case 'Backspace':
+            newButton.classList.add('button-backspace');
+            break;
+        case 'Tab':
+            newButton.classList.add('button-tab');
+            break;
+        case 'Del':
+            newButton.classList.add('button-del');
+            break;
+        case 'Space':
+            newButton.classList.add('button-space');
+            break;
+        case 'CapsLock':
+            newButton.classList.add('button-capslock');
+            break;
+        case 'Enter':
+            newButton.classList.add('button-enter');
+            break;
+        case 'ShR':
+            newButton.classList.add('button-shift', 'button-shift-default-width');
+            break;
+        case 'Shift':
+            newButton.classList.add('button-shift');
+            break;
+        case '▲':
+            newButton.classList.add('button-arrow-up');
+            break;
+        case '▼':
+            newButton.classList.add('button-arrow-down');
+            break;
+        case '►':
+            newButton.classList.add('button-arrow-right');
+            break;
+        case '◄':
+            newButton.classList.add('button-arrow-left');
+            break;
+        case '`':
+            newButton.classList.add('button-back-quote');
+            break;
+        case '-':
+            newButton.classList.add('button-minus');
+            break;
+        case '=':
+            newButton.classList.add('button-equal');
+            break;
+        case '[':
+            newButton.classList.add('button-bracket-left');
+            break;
+        case ']':
+            newButton.classList.add('button-bracket-right');
+            break;
+        case '\\':
+            newButton.classList.add('button-backslash');
+            break;
+        case ';':
+            newButton.classList.add('button-semicolon');
+            break;
+        case ',':
+            newButton.classList.add('button-comma');
+            break;
+        case '.':
+            newButton.classList.add('button-period');
+            break;
+        case '/':
+            newButton.classList.add('button-slash');
+            break;
+        default:
+            newButton.classList.add(`button-${key}`);
     }
   });
 };
@@ -221,6 +264,7 @@ const handleTabKey = () => {
     document.addEventListener("keydown", (event) => {
         if (event.code === "Tab") {
             event.preventDefault();
+            document.querySelector('.button-tab').classList.add('key-pressed');
             insertFourSpaces();
         }
     })

@@ -77,6 +77,12 @@ html {
     transition: ease-in-out .6s;
 }
 
+.key-pressed {
+    background-color: tomato;
+    transition: ease-in-out .3s;
+    border-radius: 2rem;
+}
+
 .keyboard-description {
     width: 60rem;
     padding-top: 1rem;
