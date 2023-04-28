@@ -6,7 +6,7 @@ const englishKeyboardLayout = [
   'Ctrl', 'Win', 'Alt', 'Space', 'AltR', '◄', '▼', '►',
 ];
 const systemKeys = [
-    'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'
+    'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR', 'AltR'
 ];
 
 // todo: подумай насчет деструктуризации и классов
@@ -136,6 +136,7 @@ const generateKeyboardKeys = () => {
 };
 
 const handleCapsLockKey = () => {
+  const tabKey = document.querySelector('.button-capslock');
   const toUpperCase = () => {
       keyboardGeneratedKeys.forEach((key) => {
           if (!systemKeys.includes(key.textContent)) {
@@ -143,18 +144,22 @@ const handleCapsLockKey = () => {
           }
       });
   }
-    document.querySelector('.button-capslock').addEventListener('click', toUpperCase);
+    tabKey.addEventListener('click', () => {
+        tabKey.classList.toggle('capslock-pressed');
+        toUpperCase();
+    });
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "CapsLock") {
-            document.querySelector('.button-capslock').classList.add('key-pressed');
+            tabKey.classList.toggle('capslock-pressed');
+            tabKey.classList.add('key-pressed');
             toUpperCase();
         }
     })
 
     document.addEventListener("keyup", (event) => {
         if (event.code === "CapsLock") {
-            document.querySelector('.button-capslock').classList.remove('key-pressed');
+            tabKey.classList.remove('key-pressed');
         }
     })
 };
@@ -363,6 +368,8 @@ const handleOtherKeys = () => {
         , 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g'
         , 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
 
+    const nSymbolsUpperCase = nSymbols.map(symbol => symbol.toUpperCase());
+
     const specialSymbols = {
         "`": "Backquote",
         "-": "Minus",
@@ -386,18 +393,24 @@ const handleOtherKeys = () => {
 
     let isKeyPressed = false;
 
+    let isCapsLocked = false;
+
+    document.addEventListener('capslock', (event) => {
+        isCapsLocked = event.detail.enabled;
+    });
+
     document.addEventListener("keydown", (event) => {
-        if (nSymbols.includes(event.key)) {
-            isKeyPressed = true;
-            document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
+        if (nSymbols.includes(event.key.toLowerCase()) || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
+            const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
+            document.querySelector(`.button-${key}`).classList.add('key-pressed');
             textArea.focus();
         }
     });
 
     document.addEventListener("keyup", (event) => {
-        if (nSymbols.includes(event.key)) {
-            isKeyPressed = false;
-            document.querySelector(`.button-${event.key}`).classList.remove('key-pressed');
+        if (nSymbols.includes(event.key.toLowerCase()) || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
+            const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
+            document.querySelector(`.button-${key}`).classList.remove('key-pressed');
         }
     });
 
