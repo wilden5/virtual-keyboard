@@ -88,7 +88,7 @@ const generateKeyboardKeys = () => {
             newButton.classList.add('button-arrow-left');
             break;
         case '`':
-            newButton.classList.add('button-back-quote');
+            newButton.classList.add('button-backquote');
             break;
         case '-':
             newButton.classList.add('button-minus');
@@ -97,10 +97,10 @@ const generateKeyboardKeys = () => {
             newButton.classList.add('button-equal');
             break;
         case '[':
-            newButton.classList.add('button-bracket-left');
+            newButton.classList.add('button-bracketleft');
             break;
         case ']':
-            newButton.classList.add('button-bracket-right');
+            newButton.classList.add('button-bracketright');
             break;
         case '\\':
             newButton.classList.add('button-backslash');
@@ -347,10 +347,28 @@ const handleTabKey = () => {
 
 // todo: обработай клавиши, для которых event.key не совпадает
 const handleOtherKeys = () => {
-    /*let isKeyPressed = false;
+    const nSymbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+        , 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g'
+        , 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'];
+
+    const specialSymbols = {
+        "`": "Backquote",
+        "-": "Minus",
+        "=": "Equal",
+        "[": "BracketLeft",
+        "]": "BracketRight",
+        "\\": "Backslash",
+        ";": "Semicolon",
+        ",": "Comma",
+        ".": "Period",
+        "/": "Slash",
+        " ": "Space"
+    }
+
+    let isKeyPressed = false;
 
     document.addEventListener("keydown", (event) => {
-        if (englishKeyboardLayout.includes(event.key) && event.key !== "ShiftLeft") {
+        if (nSymbols.includes(event.key)) {
             isKeyPressed = true;
             document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
             textArea.focus();
@@ -358,11 +376,26 @@ const handleOtherKeys = () => {
     });
 
     document.addEventListener("keyup", (event) => {
-        if (englishKeyboardLayout.includes(event.key)) {
+        if (nSymbols.includes(event.key)) {
             isKeyPressed = false;
             document.querySelector(`.button-${event.key}`).classList.remove('key-pressed');
         }
-    });*/
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (specialSymbols.hasOwnProperty(event.key)) {
+            isKeyPressed = true;
+            document.querySelector(`.button-${specialSymbols[event.key].toLowerCase()}`).classList.add('key-pressed');
+            textArea.focus();
+        }
+    });
+
+    document.addEventListener("keyup", (event) => {
+        if (specialSymbols.hasOwnProperty(event.key)) {
+            isKeyPressed = false;
+            document.querySelector(`.button-${specialSymbols[event.key].toLowerCase()}`).classList.remove('key-pressed');
+        }
+    });
 }
 
 const handleClicksOnKeyboardKeys = () => {
