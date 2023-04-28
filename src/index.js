@@ -23,7 +23,7 @@ const generatePageLayout = () => {
 
   const keyboardTextArea = document.createElement('textarea');
   keyboardTextArea.classList.add('keyboard-textarea');
-  keyboardTextArea.setAttribute('autofocus', '');
+  /*keyboardTextArea.setAttribute('autofocus', '');*/
 
   const keyboardKeysContainer = document.createElement('div');
   keyboardKeysContainer.classList.add('keyboard-keys-container');
@@ -135,7 +135,14 @@ const handleCapsLockKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "CapsLock") {
+            document.querySelector('.button-capslock').classList.add('key-pressed');
             toUpperCase();
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "CapsLock") {
+            document.querySelector('.button-capslock').classList.remove('key-pressed');
         }
     })
 };
@@ -174,6 +181,35 @@ const handleHoldOnShift = () => {
             holdToUpperCase("remove");
         }
     });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "ShiftLeft") {
+            event.preventDefault();
+            document.querySelector('.button-shift').classList.add('key-pressed');
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "ShiftLeft") {
+            event.preventDefault();
+            document.querySelector('.button-shift').classList.remove('key-pressed');
+        }
+    })
+
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "ShiftRight") {
+            event.preventDefault();
+            document.querySelector('.button-shift-default-width').classList.add('key-pressed');
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "ShiftRight") {
+            event.preventDefault();
+            document.querySelector('.button-shift-default-width').classList.remove('key-pressed');
+        }
+    })
+
 }; // capitalizing keyboard keys while holding on shift
 
 const handleBackspaceKey = () => {
@@ -191,8 +227,16 @@ const handleBackspaceKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Backspace") {
+            document.querySelector('.button-backspace').classList.add('key-pressed');
             event.preventDefault();
             deleteLastLetter();
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "Backspace") {
+            document.querySelector('.button-backspace').classList.remove('key-pressed');
+            event.preventDefault();
         }
     })
 };
@@ -211,8 +255,15 @@ const handleDelKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Delete") {
+            document.querySelector('.button-del').classList.add('key-pressed');
             event.preventDefault();
             deleteNextLetter();
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "Delete") {
+            document.querySelector('.button-del').classList.remove('key-pressed');
         }
     })
 };
@@ -229,8 +280,16 @@ const handleSpaceKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Space") {
+            document.querySelector('.button-space').classList.add('key-pressed');
             event.preventDefault();
             insertSpace();
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "Space") {
+            document.querySelector('.button-space').classList.remove('key-pressed');
+            event.preventDefault();
         }
     })
 };
@@ -247,7 +306,14 @@ const handleEnterKey = () => {
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "Enter") {
+            document.querySelector('.button-enter').classList.add('key-pressed');
             insertNewLine();
+        }
+    })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "Enter") {
+            document.querySelector('.button-enter').classList.remove('key-pressed');
         }
     })
 };
@@ -269,21 +335,34 @@ const handleTabKey = () => {
             insertFourSpaces();
         }
     })
+
+    document.addEventListener("keyup", (event) => {
+        if (event.code === "Tab") {
+            event.preventDefault();
+            document.querySelector('.button-tab').classList.remove('key-pressed');
+            insertFourSpaces();
+        }
+    })
 };
 
 // todo: обработай клавиши, для которых event.key не совпадает
 const handleOtherKeys = () => {
+    /*let isKeyPressed = false;
 
     document.addEventListener("keydown", (event) => {
-        englishKeyboardLayout.forEach((key) => {
-            if (event.key === key) {
-                document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
-            }
-        })
-        /*if (event.key === "a") {
+        if (englishKeyboardLayout.includes(event.key) && event.key !== "ShiftLeft") {
+            isKeyPressed = true;
             document.querySelector(`.button-${event.key}`).classList.add('key-pressed');
-        }*/
-    })
+            textArea.focus();
+        }
+    });
+
+    document.addEventListener("keyup", (event) => {
+        if (englishKeyboardLayout.includes(event.key)) {
+            isKeyPressed = false;
+            document.querySelector(`.button-${event.key}`).classList.remove('key-pressed');
+        }
+    });*/
 }
 
 const handleClicksOnKeyboardKeys = () => {
