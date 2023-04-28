@@ -3,7 +3,7 @@ const englishKeyboardLayout = [
   'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del',
   'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', 'Enter',
   'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'ShR',
-  'Ctrl', 'Win', 'Alt', 'Space', 'Alt', '◄', '▼', '►',
+  'Ctrl', 'Win', 'Alt', 'Space', 'AltR', '◄', '▼', '►',
 ];
 const systemKeys = [
     'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR'
@@ -116,6 +116,18 @@ const generateKeyboardKeys = () => {
             break;
         case '/':
             newButton.classList.add('button-slash');
+            break;
+        case 'Win':
+            newButton.classList.add('button-meta');
+            break;
+        case 'Ctrl':
+            newButton.classList.add('button-control');
+            break;
+        case 'Alt':
+            newButton.classList.add('button-altleft');
+            break;
+        case 'AltR':
+            newButton.classList.add('button-altright');
             break;
         default:
             newButton.classList.add(`button-${key}`);
@@ -363,7 +375,14 @@ const handleOtherKeys = () => {
         ".": "Period",
         "/": "Slash",
         " ": "Space",
-    }
+        "Meta": "Meta",
+        "Control": "Control",
+    };
+
+    const altKeys = {
+        "AltLeft": "AltLeft",
+        "AltRight": "AltRight"
+    };
 
     let isKeyPressed = false;
 
@@ -394,6 +413,22 @@ const handleOtherKeys = () => {
         if (specialSymbols.hasOwnProperty(event.key)) {
             isKeyPressed = false;
             document.querySelector(`.button-${specialSymbols[event.key].toLowerCase()}`).classList.remove('key-pressed');
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (altKeys.hasOwnProperty(event.code)) {
+            isKeyPressed = true;
+            event.preventDefault();
+            document.querySelector(`.button-${altKeys[event.code].toLowerCase()}`).classList.add('key-pressed');
+            textArea.focus();
+        }
+    });
+
+    document.addEventListener("keyup", (event) => {
+        if (altKeys.hasOwnProperty(event.code)) {
+            isKeyPressed = true;
+            document.querySelector(`.button-${altKeys[event.code].toLowerCase()}`).classList.remove('key-pressed');
         }
     });
 }
