@@ -76,16 +76,16 @@ const generateKeyboardKeys = () => {
             newButton.classList.add('button-shift');
             break;
         case '▲':
-            newButton.classList.add('button-arrow-up');
+            newButton.classList.add('button-arrowup');
             break;
         case '▼':
-            newButton.classList.add('button-arrow-down');
+            newButton.classList.add('button-arrowdown');
             break;
         case '►':
-            newButton.classList.add('button-arrow-right');
+            newButton.classList.add('button-arrowright');
             break;
         case '◄':
-            newButton.classList.add('button-arrow-left');
+            newButton.classList.add('button-arrowleft');
             break;
         case '`':
             newButton.classList.add('button-backquote');
@@ -307,6 +307,7 @@ const handleEnterKey = () => {
     document.addEventListener("keydown", (event) => {
         if (event.code === "Enter") {
             document.querySelector('.button-enter').classList.add('key-pressed');
+            event.preventDefault();
             insertNewLine();
         }
     })
@@ -345,7 +346,6 @@ const handleTabKey = () => {
     })
 };
 
-// todo: обработай клавиши, для которых event.key не совпадает
 const handleOtherKeys = () => {
     const nSymbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
         , 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g'
@@ -362,7 +362,7 @@ const handleOtherKeys = () => {
         ",": "Comma",
         ".": "Period",
         "/": "Slash",
-        " ": "Space"
+        " ": "Space",
     }
 
     let isKeyPressed = false;
@@ -394,6 +394,51 @@ const handleOtherKeys = () => {
         if (specialSymbols.hasOwnProperty(event.key)) {
             isKeyPressed = false;
             document.querySelector(`.button-${specialSymbols[event.key].toLowerCase()}`).classList.remove('key-pressed');
+        }
+    });
+}
+
+const handleArrowKeys = () => {
+    const arrowKeys = {
+        "▲": "ArrowUp",
+        "▼": "ArrowDown",
+        "►": "ArrowRight",
+        "◄": "ArrowLeft",
+    };
+
+    document.addEventListener("keydown", (event) => {
+        const key = arrowKeys[event.key] || event.key;
+        switch (key) {
+            case "ArrowUp":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.add('key-pressed');
+                break;
+            case "ArrowDown":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.add('key-pressed');
+                break;
+            case "ArrowRight":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.add('key-pressed');
+                break;
+            case "ArrowLeft":
+                document.querySelector(`.button-arrowleft`).classList.add('key-pressed');
+                break;
+        }
+    });
+
+    document.addEventListener("keyup", (event) => {
+        const key = arrowKeys[event.key] || event.key;
+        switch (key) {
+            case "ArrowUp":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.remove('key-pressed');
+                break;
+            case "ArrowDown":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.remove('key-pressed');
+                break;
+            case "ArrowRight":
+                document.querySelector(`.button-${key.toLowerCase()}`).classList.remove('key-pressed');
+                break;
+            case "ArrowLeft":
+                document.querySelector(`.button-arrowleft`).classList.remove('key-pressed');
+                break;
         }
     });
 }
@@ -432,6 +477,7 @@ const handleClicksOnKeyboardKeys = () => {
                 break;
             default:
                 handleOtherKeys();
+                handleArrowKeys();
         }
     })
 }
