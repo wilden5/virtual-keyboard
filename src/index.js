@@ -29,9 +29,6 @@ const setUserLanguage = () => {
     } else {
         userLanguage = 'different from EN/RU language, stop breaking my keyboard!!!!'
     }
-    if (userLanguage !== localStorage.getItem('userLanguage')) {
-        localStorage.setItem('userLanguage', userLanguage);
-    }
     return userLanguage;
 }
 
