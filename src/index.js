@@ -53,12 +53,17 @@ const generatePageLayout = () => {
   keyboardDescription.classList.add('keyboard-description');
   keyboardDescription.textContent = 'Клавиатура создана в операционной системе Windows '
         + 'Для переключения языка комбинация: Shift + Alt' +
-      ' Пожалуйста убедитесь что язык системы совпадает с языком клавиатуры';
+      ' Пожалуйста убедитесь что язык вашей системы совпадает с языком клавиатуры';
+
+  const helpImg = document.createElement('img');
+  helpImg.src = './assets/png/help-img.png';
+  helpImg.classList.add('help-image');
 
   keyboardWrapper.appendChild(keyboardTitle);
   keyboardWrapper.appendChild(keyboardTextArea);
   keyboardWrapper.appendChild(keyboardKeysContainer);
   keyboardWrapper.appendChild(keyboardDescription);
+  keyboardWrapper.appendChild(helpImg);
 
   body.appendChild(keyboardWrapper);
 };
