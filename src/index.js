@@ -9,8 +9,6 @@ const systemKeys = [
     'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR', 'AltR'
 ];
 
-// todo: подумай насчет деструктуризации и классов
-
 const body = document.querySelector('body');
 
 const generatePageLayout = () => {
@@ -180,6 +178,7 @@ const handleHoldOnShift = () => {
             })
         }
     }
+
     document.querySelectorAll('.button-shift').forEach((shiftButton) => {
         shiftButton.addEventListener('mousedown', () => {
             holdToUpperCase("add");
@@ -492,10 +491,21 @@ const handleArrowKeys = () => {
 }
 
 const handleClicksOnKeyboardKeys = () => {
+    const isUpperCasePressed = () => {
+        const capsLock = document.querySelector('.button-capslock');
+        const holdOnShift = document.querySelector(".button-shift");
+        return capsLock.classList.contains('capslock-pressed') || holdOnShift.classList.contains('key-pressed');
+    }
+
+
     keyboardGeneratedKeys.forEach((key) => {
         if (!systemKeys.includes(key.textContent)) {
             key.addEventListener('click', () => {
-                textArea.value += key.textContent;
+                if (isUpperCasePressed()) {
+                    textArea.value += key.textContent.toUpperCase();
+                } else {
+                    textArea.value += key.textContent;
+                }
                 textArea.focus();
             })
         }
@@ -535,7 +545,12 @@ const handleClicksOnKeyboardKeys = () => {
   generateKeyboardKeys();
 }());
 
-// todo: подумай как переместить 209 210 212
+// todo: 0 подумай насчет деструктуризации и классов
+// todo: 1 переключение языка
+// todo: 2 замена символов на цифрах при удержании шифта
+// todo: 3 LocalStorage
+// todo: ЕсЛинтом сделай фикс для этого файла
+
 const textArea = document.querySelector('.keyboard-textarea');
 const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
 
