@@ -19,18 +19,23 @@ const systemKeys = [
 ];
 
 const body = document.querySelector('body');
-const initialLang = navigator.language;
-const setLang = () => {
-    if (initialLang.includes('ru')) {
-        return 'ru';
-    } else if (initialLang.includes('en')) {
-        return 'en';
+let userLanguage;
+const setUserLanguage = () => {
+    let userLanguage = localStorage.getItem('userLanguage') || navigator.language;
+    if (userLanguage.includes('ru')) {
+        userLanguage = 'ru';
+    } else if (userLanguage.includes('en')) {
+        userLanguage = 'en';
     } else {
-        return 'different from EN/RU language, stop breaking my keyboard!!!!'
+        userLanguage = 'different from EN/RU language, stop breaking my keyboard!!!!'
     }
+    if (userLanguage !== localStorage.getItem('userLanguage')) {
+        localStorage.setItem('userLanguage', userLanguage);
+    }
+    return userLanguage;
 }
 
-let userLanguage = setLang();
+userLanguage = setUserLanguage();
 
 const generatePageLayout = () => {
   const keyboardWrapper = document.createElement('div');
@@ -696,6 +701,7 @@ const switchLanguage = () => {
             keyboardKeysContainer.innerHTML = '';
             const currentLanguage = userLanguage === 'en' ? 'ru' : 'en';
             userLanguage = currentLanguage;
+            localStorage.setItem('userLanguage', userLanguage);
             generateKeyboardKeys(currentLanguage);
         }
     });
@@ -717,9 +723,8 @@ const switchLanguage = () => {
 }());
 
 // todo: 0 подумай насчет деструктуризации и классов
-// todo: 1 переключение языка
+// todo: 1 Почему АпперКейс перестает работать при переключении языка
 // todo: 2 замена символов на цифрах при удержании шифта
-// todo: 3 LocalStorage
 // todo: ЕсЛинтом сделай фикс для этого файла
 
 const textArea = document.querySelector('.keyboard-textarea');
