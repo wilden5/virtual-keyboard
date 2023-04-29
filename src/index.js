@@ -19,7 +19,18 @@ const systemKeys = [
 ];
 
 const body = document.querySelector('body');
-let userLanguage = 'en';
+const initialLang = navigator.language;
+const setLang = () => {
+    if (initialLang.includes('ru')) {
+        return 'ru';
+    } else if (initialLang.includes('en')) {
+        return 'en';
+    } else {
+        return 'different from EN/RU language, stop breaking my keyboard!!!!'
+    }
+}
+
+let userLanguage = setLang();
 
 const generatePageLayout = () => {
   const keyboardWrapper = document.createElement('div');
@@ -39,7 +50,8 @@ const generatePageLayout = () => {
   const keyboardDescription = document.createElement('p');
   keyboardDescription.classList.add('keyboard-description');
   keyboardDescription.textContent = 'Клавиатура создана в операционной системе Windows '
-        + 'Для переключения языка комбинация: Shift + Alt';
+        + 'Для переключения языка комбинация: Shift + Alt' +
+      ' Пожалуйста убедитесь что язык системы совпадает с языком клавиатуры';
 
   keyboardWrapper.appendChild(keyboardTitle);
   keyboardWrapper.appendChild(keyboardTextArea);
