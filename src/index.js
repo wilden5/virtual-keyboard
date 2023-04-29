@@ -5,11 +5,21 @@ const englishKeyboardLayout = [
   'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'ShR',
   'Ctrl', 'Win', 'Alt', 'Space', 'AltR', '◄', '▼', '►',
 ];
+
+const russianKeyboardLayout = [
+    'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+    'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del',
+    'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'Enter',
+    'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'ShR',
+    'Ctrl', 'Win', 'Alt', 'Space', 'AltR', '◄', '▼', '►',
+]
+
 const systemKeys = [
     'Backspace', 'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Space','Enter','Del', 'ShR', 'AltR'
 ];
 
 const body = document.querySelector('body');
+let userLanguage = 'en';
 
 const generatePageLayout = () => {
   const keyboardWrapper = document.createElement('div');
@@ -29,7 +39,7 @@ const generatePageLayout = () => {
   const keyboardDescription = document.createElement('p');
   keyboardDescription.classList.add('keyboard-description');
   keyboardDescription.textContent = 'Клавиатура создана в операционной системе Windows '
-        + 'Для переключения языка комбинация: ctrl + alt';
+        + 'Для переключения языка комбинация: Shift + Alt';
 
   keyboardWrapper.appendChild(keyboardTitle);
   keyboardWrapper.appendChild(keyboardTextArea);
@@ -39,98 +49,190 @@ const generatePageLayout = () => {
   body.appendChild(keyboardWrapper);
 };
 
-const generateKeyboardKeys = () => {
+const generateKeyboardKeys = (language) => {
   const keyboardKeysContainer = document.querySelector('.keyboard-keys-container');
 
-  englishKeyboardLayout.forEach((key) => {
-    const newButton = document.createElement('button');
-    newButton.classList.add('keyboard-button');
-    newButton.textContent = key;
-    keyboardKeysContainer.appendChild(newButton);
+  if(language === 'en') {
+      englishKeyboardLayout.forEach((key) => {
+          const newButton = document.createElement('button');
+          newButton.classList.add('keyboard-button');
+          newButton.textContent = key;
+          keyboardKeysContainer.appendChild(newButton);
 
-    switch (key) {
-        case 'Backspace':
-            newButton.classList.add('button-backspace');
-            break;
-        case 'Tab':
-            newButton.classList.add('button-tab');
-            break;
-        case 'Del':
-            newButton.classList.add('button-del');
-            break;
-        case 'Space':
-            newButton.classList.add('button-space');
-            break;
-        case 'CapsLock':
-            newButton.classList.add('button-capslock');
-            break;
-        case 'Enter':
-            newButton.classList.add('button-enter');
-            break;
-        case 'ShR':
-            newButton.classList.add('button-shift', 'button-shift-default-width');
-            break;
-        case 'Shift':
-            newButton.classList.add('button-shift');
-            break;
-        case '▲':
-            newButton.classList.add('button-arrowup');
-            break;
-        case '▼':
-            newButton.classList.add('button-arrowdown');
-            break;
-        case '►':
-            newButton.classList.add('button-arrowright');
-            break;
-        case '◄':
-            newButton.classList.add('button-arrowleft');
-            break;
-        case '`':
-            newButton.classList.add('button-backquote');
-            break;
-        case '-':
-            newButton.classList.add('button-minus');
-            break;
-        case '=':
-            newButton.classList.add('button-equal');
-            break;
-        case '[':
-            newButton.classList.add('button-bracketleft');
-            break;
-        case ']':
-            newButton.classList.add('button-bracketright');
-            break;
-        case '\\':
-            newButton.classList.add('button-backslash');
-            break;
-        case ';':
-            newButton.classList.add('button-semicolon');
-            break;
-        case ',':
-            newButton.classList.add('button-comma');
-            break;
-        case '.':
-            newButton.classList.add('button-period');
-            break;
-        case '/':
-            newButton.classList.add('button-slash');
-            break;
-        case 'Win':
-            newButton.classList.add('button-meta');
-            break;
-        case 'Ctrl':
-            newButton.classList.add('button-control');
-            break;
-        case 'Alt':
-            newButton.classList.add('button-altleft');
-            break;
-        case 'AltR':
-            newButton.classList.add('button-altright');
-            break;
-        default:
-            newButton.classList.add(`button-${key}`);
-    }
-  });
+          switch (key) {
+              case 'Backspace':
+                  newButton.classList.add('button-backspace');
+                  break;
+              case 'Tab':
+                  newButton.classList.add('button-tab');
+                  break;
+              case 'Del':
+                  newButton.classList.add('button-del');
+                  break;
+              case 'Space':
+                  newButton.classList.add('button-space');
+                  break;
+              case 'CapsLock':
+                  newButton.classList.add('button-capslock');
+                  break;
+              case 'Enter':
+                  newButton.classList.add('button-enter');
+                  break;
+              case 'ShR':
+                  newButton.classList.add('button-shift', 'button-shift-default-width');
+                  break;
+              case 'Shift':
+                  newButton.classList.add('button-shift');
+                  break;
+              case '▲':
+                  newButton.classList.add('button-arrowup');
+                  break;
+              case '▼':
+                  newButton.classList.add('button-arrowdown');
+                  break;
+              case '►':
+                  newButton.classList.add('button-arrowright');
+                  break;
+              case '◄':
+                  newButton.classList.add('button-arrowleft');
+                  break;
+              case '`':
+                  newButton.classList.add('button-backquote');
+                  break;
+              case '-':
+                  newButton.classList.add('button-minus');
+                  break;
+              case '=':
+                  newButton.classList.add('button-equal');
+                  break;
+              case '[':
+                  newButton.classList.add('button-bracketleft');
+                  break;
+              case ']':
+                  newButton.classList.add('button-bracketright');
+                  break;
+              case '\\':
+                  newButton.classList.add('button-backslash');
+                  break;
+              case ';':
+                  newButton.classList.add('button-semicolon');
+                  break;
+              case ',':
+                  newButton.classList.add('button-comma');
+                  break;
+              case '.':
+                  newButton.classList.add('button-period');
+                  break;
+              case '/':
+                  newButton.classList.add('button-slash');
+                  break;
+              case 'Win':
+                  newButton.classList.add('button-meta');
+                  break;
+              case 'Ctrl':
+                  newButton.classList.add('button-control');
+                  break;
+              case 'Alt':
+                  newButton.classList.add('button-altleft');
+                  break;
+              case 'AltR':
+                  newButton.classList.add('button-altright');
+                  break;
+              default:
+                  newButton.classList.add(`button-${key}`);
+          }
+      });
+  } else {
+      russianKeyboardLayout.forEach((key) => {
+          const newButton = document.createElement('button');
+          newButton.classList.add('keyboard-button');
+          newButton.textContent = key;
+          keyboardKeysContainer.appendChild(newButton);
+
+          switch (key) {
+              case 'Backspace':
+                  newButton.classList.add('button-backspace');
+                  break;
+              case 'Tab':
+                  newButton.classList.add('button-tab');
+                  break;
+              case 'Del':
+                  newButton.classList.add('button-del');
+                  break;
+              case 'Space':
+                  newButton.classList.add('button-space');
+                  break;
+              case 'CapsLock':
+                  newButton.classList.add('button-capslock');
+                  break;
+              case 'Enter':
+                  newButton.classList.add('button-enter');
+                  break;
+              case 'ShR':
+                  newButton.classList.add('button-shift', 'button-shift-default-width');
+                  break;
+              case 'Shift':
+                  newButton.classList.add('button-shift');
+                  break;
+              case '▲':
+                  newButton.classList.add('button-arrowup');
+                  break;
+              case '▼':
+                  newButton.classList.add('button-arrowdown');
+                  break;
+              case '►':
+                  newButton.classList.add('button-arrowright');
+                  break;
+              case '◄':
+                  newButton.classList.add('button-arrowleft');
+                  break;
+              case 'ё':
+                  newButton.classList.add('button-ё');
+                  break;
+              case '-':
+                  newButton.classList.add('button-minus');
+                  break;
+              case '=':
+                  newButton.classList.add('button-equal');
+                  break;
+              case 'х':
+                  newButton.classList.add('button-х');
+                  break;
+              case 'ъ':
+                  newButton.classList.add('button-ъ');
+                  break;
+              case '\\':
+                  newButton.classList.add('button-backslash');
+                  break;
+              case 'ж':
+                  newButton.classList.add('button-ж');
+                  break;
+              case 'б':
+                  newButton.classList.add('button-б');
+                  break;
+              case 'ю':
+                  newButton.classList.add('button-ю');
+                  break;
+              case '.':
+                  newButton.classList.add('button-period');
+                  break;
+              case 'Win':
+                  newButton.classList.add('button-meta');
+                  break;
+              case 'Ctrl':
+                  newButton.classList.add('button-control');
+                  break;
+              case 'Alt':
+                  newButton.classList.add('button-altleft');
+                  break;
+              case 'AltR':
+                  newButton.classList.add('button-altright');
+                  break;
+              default:
+                  newButton.classList.add(`button-${key}`);
+          }
+      });
+  }
 };
 
 const handleCapsLockKey = () => {
@@ -445,6 +547,30 @@ const handleOtherKeys = () => {
     });
 }
 
+const handleRussianKeys = () => {
+    const rSymbols = ['ё', 'х', 'ъ','б', 'ю', 'д', 'ж'
+        , 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'ф', 'ы', 'в', 'а', 'п'
+        , 'р', 'о', 'л', 'д', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь'];
+
+    let isCapsLocked = false;
+    const rSymbolsUpperCase = rSymbols.map(symbol => symbol.toUpperCase());
+
+    document.addEventListener("keydown", (event) => {
+        if (rSymbols.includes(event.key.toLowerCase()) || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
+            const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
+            document.querySelector(`.button-${key}`).classList.add('key-pressed');
+            textArea.focus();
+        }
+    });
+
+    document.addEventListener("keyup", (event) => {
+        if (rSymbols.includes(event.key.toLowerCase()) || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
+            const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
+            document.querySelector(`.button-${key}`).classList.remove('key-pressed');
+        }
+    });
+}
+
 const handleArrowKeys = () => {
     const arrowKeys = {
         "▲": "ArrowUp",
@@ -536,13 +662,46 @@ const handleClicksOnKeyboardKeys = () => {
             default:
                 handleOtherKeys();
                 handleArrowKeys();
+                handleRussianKeys();
         }
     })
 }
 
+const switchLanguage = () => {
+    const keyboardKeysContainer = document.querySelector('.keyboard-keys-container');
+    let ctrlPressed = false;
+    let altPressed = false;
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Shift') {
+            ctrlPressed = true;
+        }
+        if (event.key === 'Alt') {
+            altPressed = true;
+        }
+
+        if (ctrlPressed && altPressed) {
+            keyboardKeysContainer.innerHTML = '';
+            const currentLanguage = userLanguage === 'en' ? 'ru' : 'en';
+            userLanguage = currentLanguage;
+            generateKeyboardKeys(currentLanguage);
+        }
+    });
+
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'Shift') {
+            ctrlPressed = false;
+        }
+        if (event.key === 'Alt') {
+            altPressed = false;
+        }
+    });
+}
+
 (function initPage() {
   generatePageLayout();
-  generateKeyboardKeys();
+  generateKeyboardKeys(userLanguage);
+  switchLanguage();
 }());
 
 // todo: 0 подумай насчет деструктуризации и классов
