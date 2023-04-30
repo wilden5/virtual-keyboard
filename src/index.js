@@ -259,7 +259,7 @@ const getKeyboardGeneratedKeys = () => {
 };
 
 const handleCapsLockKey = () => {
-  const tabKey = document.querySelector('.button-capslock');
+  const capsLock = document.querySelector('.button-capslock');
   const toUpperCase = () => {
       const keyboardGeneratedKeys = getKeyboardGeneratedKeys();
       keyboardGeneratedKeys.forEach((key) => {
@@ -268,22 +268,22 @@ const handleCapsLockKey = () => {
           }
       });
   }
-    tabKey.addEventListener('click', () => {
-        tabKey.classList.toggle('capslock-pressed-click');
+    capsLock.addEventListener('click', () => {
+        capsLock.classList.toggle('capslock-pressed-click');
         toUpperCase();
     });
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "CapsLock") {
-            tabKey.classList.toggle('capslock-pressed-ph');
-            tabKey.classList.add('key-pressed');
+            capsLock.classList.toggle('capslock-pressed-ph');
+            capsLock.classList.add('key-pressed');
             toUpperCase();
         }
     })
 
     document.addEventListener("keyup", (event) => {
         if (event.code === "CapsLock") {
-            tabKey.classList.remove('key-pressed');
+            capsLock.classList.remove('key-pressed');
         }
     })
 };
@@ -735,8 +735,6 @@ const switchLanguage = () => {
 }());
 
 // todo: 0 подумай насчет деструктуризации и классов
-// todo: 2 замена символов на цифрах при удержании шифта
 // todo: ЕсЛинтом сделай фикс для этого файла
 
 const textArea = document.querySelector('.keyboard-textarea');
-
