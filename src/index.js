@@ -21,7 +21,7 @@ const systemKeys = [
 const body = document.querySelector('body');
 let userLanguage;
 const setUserLanguage = () => {
-  let userLanguage = localStorage.getItem('userLanguage') || navigator.language;
+  userLanguage = localStorage.getItem('userLanguage') || navigator.language;
   if (userLanguage.includes('ru')) {
     userLanguage = 'ru';
   } else if (userLanguage.includes('en')) {
@@ -523,7 +523,8 @@ const handleOtherKeys = () => {
   });
 
   document.addEventListener('keydown', (event) => {
-    if (nSymbols.includes(event.key.toLowerCase()) || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
+    if (nSymbols.includes(event.key.toLowerCase())
+        || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
       const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
       document.querySelector(`.button-${key}`).classList.add('key-pressed');
       textArea.focus();
@@ -531,7 +532,8 @@ const handleOtherKeys = () => {
   });
 
   document.addEventListener('keyup', (event) => {
-    if (nSymbols.includes(event.key.toLowerCase()) || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
+    if (nSymbols.includes(event.key.toLowerCase())
+        || nSymbolsUpperCase.includes(event.key.toUpperCase())) {
       const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
       document.querySelector(`.button-${key}`).classList.remove('key-pressed');
     }
@@ -578,7 +580,8 @@ const handleRussianKeys = () => {
   const rSymbolsUpperCase = rSymbols.map((symbol) => symbol.toUpperCase());
 
   document.addEventListener('keydown', (event) => {
-    if (rSymbols.includes(event.key.toLowerCase()) || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
+    if (rSymbols.includes(event.key.toLowerCase())
+        || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
       const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
       document.querySelector(`.button-${key}`).classList.add('key-pressed');
       textArea.focus();
@@ -586,7 +589,8 @@ const handleRussianKeys = () => {
   });
 
   document.addEventListener('keyup', (event) => {
-    if (rSymbols.includes(event.key.toLowerCase()) || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
+    if (rSymbols.includes(event.key.toLowerCase())
+        || rSymbolsUpperCase.includes(event.key.toUpperCase())) {
       const key = isCapsLocked ? event.key.toUpperCase() : event.key.toLowerCase();
       document.querySelector(`.button-${key}`).classList.remove('key-pressed');
     }
@@ -616,6 +620,8 @@ const handleArrowKeys = () => {
       case 'ArrowLeft':
         document.querySelector('.button-arrowleft').classList.add('key-pressed');
         break;
+      default:
+        break;
     }
   });
 
@@ -633,6 +639,8 @@ const handleArrowKeys = () => {
         break;
       case 'ArrowLeft':
         document.querySelector('.button-arrowleft').classList.remove('key-pressed');
+        break;
+      default:
         break;
     }
   });
