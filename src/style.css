@@ -82,6 +82,7 @@ html {
     transition: ease-in-out .2s;
 }
 
+.capslock-pressed-ph,
 .key-pressed {
     background-color: tomato;
     transition: ease-in-out .3s;
@@ -104,4 +105,10 @@ html {
 .help-image {
     margin-top: 2rem;
     border-radius: 2rem;
+}
+
+.capslock-pressed-click {
+    background-color: #FFB90F;
+    border-radius: 2rem;
+    transition: ease-in-out .2s;
 }

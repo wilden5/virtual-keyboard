@@ -269,13 +269,13 @@ const handleCapsLockKey = () => {
       });
   }
     tabKey.addEventListener('click', () => {
-        tabKey.classList.toggle('capslock-pressed');
+        tabKey.classList.toggle('capslock-pressed-click');
         toUpperCase();
     });
 
     document.addEventListener("keydown", (event) => {
         if (event.code === "CapsLock") {
-            tabKey.classList.toggle('capslock-pressed');
+            tabKey.classList.toggle('capslock-pressed-ph');
             tabKey.classList.add('key-pressed');
             toUpperCase();
         }
@@ -645,7 +645,9 @@ const handleClicksOnKeyboardKeys = () => {
     const isUpperCasePressed = () => {
         const capsLock = document.querySelector('.button-capslock');
         const holdOnShift = document.querySelector(".button-shift");
-        return capsLock.classList.contains('capslock-pressed') || holdOnShift.classList.contains('key-pressed');
+        return capsLock.classList.contains('capslock-pressed-click')
+            || capsLock.classList.contains('capslock-pressed-ph')
+            || holdOnShift.classList.contains('key-pressed');
     }
 
     const keyboardGeneratedKeys = getKeyboardGeneratedKeys();
@@ -693,6 +695,7 @@ const handleClicksOnKeyboardKeys = () => {
 }
 
 const switchLanguage = () => {
+    handleClicksOnKeyboardKeys();
     const keyboardKeysContainer = document.querySelector('.keyboard-keys-container');
     let ctrlPressed = false;
     let altPressed = false;
@@ -711,6 +714,7 @@ const switchLanguage = () => {
             userLanguage = currentLanguage;
             localStorage.setItem('userLanguage', userLanguage);
             generateKeyboardKeys(currentLanguage);
+            handleClicksOnKeyboardKeys();
         }
     });
 
@@ -735,6 +739,4 @@ const switchLanguage = () => {
 // todo: ЕсЛинтом сделай фикс для этого файла
 
 const textArea = document.querySelector('.keyboard-textarea');
-/*const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');*/
 
-handleClicksOnKeyboardKeys();
