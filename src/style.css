@@ -1,0 +1,114 @@
+html {
+    font-size: 10px;
+}
+
+.keyboard-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keyboard-title {
+    font-size: 4rem;
+    color: darkolivegreen;
+}
+
+.keyboard-textarea {
+    width: 77rem;
+    height: 15rem;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    resize: none;
+    background-color: #f8f8f8;
+}
+
+.keyboard-keys-container {
+    width: 75rem;
+    padding: 1rem 0.6rem 1rem 1rem;
+    margin: .5rem;
+    background-color: cadetblue;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: darkolivegreen;
+    border-width: 0.5rem;
+}
+
+.keyboard-button {
+    height: 4.5rem;
+    width: 5.5%;
+    margin: 0.3rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: darkolivegreen;
+    color: white;
+    font-size: 2rem;
+    padding: 0;
+}
+
+.button-tab,
+.button-del {
+    width: 8%;
+}
+
+.button-enter,
+.button-backspace {
+    width: 17%;
+}
+
+.button-space {
+    width: 54.5%;
+}
+
+.button-capslock {
+    width: 18%;
+}
+
+.button-shift {
+    width: 23%;
+}
+
+.button-shift-default-width {
+    width: 5.5%;
+}
+
+.keyboard-button:hover {
+    cursor: pointer;
+    background-color: #B8860B;
+}
+
+.keyboard-button:active {
+    background-color: #FFB90F;
+    border-radius: 2rem;
+    transition: ease-in-out .2s;
+}
+
+.capslock-pressed-ph,
+.key-pressed {
+    background-color: tomato;
+    transition: ease-in-out .3s;
+    border-radius: 2rem;
+}
+
+.keyboard-description {
+    width: 60rem;
+    padding-top: 1rem;
+    font-size: 2.5rem;
+    text-align: center;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.help-image {
+    margin-top: 2rem;
+    border-radius: 2rem;
+}
+
+.capslock-pressed-click {
+    background-color: #FFB90F;
+    border-radius: 2rem;
+    transition: ease-in-out .2s;
+}

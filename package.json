@@ -1,0 +1,25 @@
+{
+  "name": "virtual-keyboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "lint" : "npx eslint src/index.js",
+    "lint-fix" : "npx eslint src/index.js --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilden5/virtual-keyboard.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wilden5/virtual-keyboard/issues"
+  },
+  "homepage": "https://github.com/wilden5/virtual-keyboard#readme",
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
