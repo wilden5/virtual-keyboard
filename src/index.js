@@ -254,9 +254,14 @@ const generateKeyboardKeys = (language) => {
   }
 };
 
+const getKeyboardGeneratedKeys = () => {
+    return document.querySelectorAll('.keyboard-button');
+};
+
 const handleCapsLockKey = () => {
   const tabKey = document.querySelector('.button-capslock');
   const toUpperCase = () => {
+      const keyboardGeneratedKeys = getKeyboardGeneratedKeys();
       keyboardGeneratedKeys.forEach((key) => {
           if (!systemKeys.includes(key.textContent)) {
               key.classList.toggle('uppercase');
@@ -285,6 +290,7 @@ const handleCapsLockKey = () => {
 
 const handleHoldOnShift = () => {
     const holdToUpperCase = (type) => {
+        const keyboardGeneratedKeys = getKeyboardGeneratedKeys();
         if (type === "add") {
             keyboardGeneratedKeys.forEach((key) => {
                 if (!systemKeys.includes(key.textContent)) {
@@ -642,7 +648,7 @@ const handleClicksOnKeyboardKeys = () => {
         return capsLock.classList.contains('capslock-pressed') || holdOnShift.classList.contains('key-pressed');
     }
 
-
+    const keyboardGeneratedKeys = getKeyboardGeneratedKeys();
     keyboardGeneratedKeys.forEach((key) => {
         if (!systemKeys.includes(key.textContent)) {
             key.addEventListener('click', () => {
@@ -725,11 +731,10 @@ const switchLanguage = () => {
 }());
 
 // todo: 0 подумай насчет деструктуризации и классов
-// todo: 1 Почему АпперКейс перестает работать при переключении языка
 // todo: 2 замена символов на цифрах при удержании шифта
 // todo: ЕсЛинтом сделай фикс для этого файла
 
 const textArea = document.querySelector('.keyboard-textarea');
-const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');
+/*const keyboardGeneratedKeys = document.querySelectorAll('.keyboard-button');*/
 
 handleClicksOnKeyboardKeys();
