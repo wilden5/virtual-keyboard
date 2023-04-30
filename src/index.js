@@ -413,12 +413,13 @@ const handleDelKey = () => {
 
 const handleSpaceKey = () => {
     const insertSpace = () => {
-        const selectionStart = textArea.selectionStart;
-        textArea.value = textArea.value.slice(0, selectionStart) + ' ' + textArea.value.slice(selectionStart);
+        const { selectionStart, value } = textArea;
+        textArea.value = `${value.slice(0, selectionStart)} ${value.slice(selectionStart)}`;
         textArea.selectionStart = selectionStart + 1;
         textArea.selectionEnd = selectionStart + 1;
         textArea.focus();
     }
+
     document.querySelector('.button-space').addEventListener('click', insertSpace);
 
     document.addEventListener("keydown", (event) => {
